@@ -21,7 +21,8 @@ void xnti::app::run(const char *url)
 
     if (video_json[0]["isSuccess"])
         video_info = pJ->get_video_information(video_json);
-    else {
+    else
+    {
         pA->run(url);
         return;
     }
@@ -34,24 +35,22 @@ void xnti::app::run(const char *url)
     std::string audio_output = audio_url.substr(18, 13) + "_audio.wav";
     std::string merge_output = video_url.substr(18, 13) + "_output.mp4";
 
-    std::cout << "Starting to download video..."
-              << "\n";
+    printf("\033[32m[ ... ] Starting to download video.\033[0m\n");
+
     pA->download(video_url, video_output);
-    std::cout << "Video downloaded successfully..."
-              << "\n";
-    std::cout << "Starting to download audio..."
-              << "\n";
+    printf("\033[1;32m[ +++ ] Video downloaded successfully...\033[0m\n");
+
+    printf("\033[32m[ ... ] Starting to download audio.\033[0m\n");
+
     pA->download(audio_url, audio_output);
-    std::cout << "Audio downloaded successfully..."
-              << "\n";
-    std::cout << "Merging them into one file..."
-              << "\n";
+    printf("\033[1;32m[ +++ ] Audio downloaded successfully...\033[0m\n");
+
+    printf("\033[32m[ ... ] Merging them into one file.\033[0m\n");
+
     if (pA->merge_video_audio(video_output, audio_output, merge_output))
-        std::cout << "Success!"
-                  << "\n";
+        printf("\033[1;32m[ +++ ] Successfully merged to one file!\033[0m\n");
     if (pA->clerance(video_output, audio_output, merge_output))
-        std::cout << "Cleared & exiting."
-                  << "\n";
+        printf("\033[1;32m[ +++ ] Cleared & exiting.\033[0m\n");
 }
 
 bool xnti::app::download(std::string video_url, std::string output_name)
