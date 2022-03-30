@@ -21,8 +21,10 @@ void xnti::app::run(const char *url)
 
     if (video_json[0]["isSuccess"])
         video_info = pJ->get_video_information(video_json);
-    else
+    else {
+        pA->run(url);
         return;
+    }
 
     std::string video_url = video_info["video_url"].get<std::string>();
     std::string audio_url = video_info["audio_url"].get<std::string>();

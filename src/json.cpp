@@ -17,13 +17,13 @@ nlohmann::json xnti::json::get_json(const char* url) {
     nlohmann::json j;
 
     cpr::Response r = cpr::Get(cpr::Url{url});
-    std::cout << "Request status code: " << r.status_code << "\n";
+    //std::cout << "Request status code: " << r.status_code << "\n";
 
     if(r.status_code == 200) {
         j = nlohmann::json::parse(r.text);
         j[0]["isSuccess"] = true;
     } else {
-        std::cout << "Request failed." << "\n";
+        //std::cout << "Request failed." << "\n";
         j[0]["isSuccess"] = false;
     }
 
