@@ -21,8 +21,10 @@ nlohmann::json xnti::json::get_json(const char* url) {
 
     if(r.status_code == 200) {
         j = nlohmann::json::parse(r.text);
+        j[0]["isSuccess"] = true;
     } else {
-        std::cout << "HTTP REQUEST FAILED" << "\n";
+        std::cout << "Request failed." << "\n";
+        j[0]["isSuccess"] = false;
     }
 
     return j;

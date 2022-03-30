@@ -15,34 +15,41 @@ void xnti::app::run(const char *url)
 
     std::string url_str = url;
     pA->replace_url_with_dotjson(url_str);
-    std::cout << url_str << "\n";
 
     nlohmann::json video_json = pJ->get_json(url_str.c_str());
-    nlohmann::json video_info = pJ->get_video_information(video_json);
+    nlohmann::json video_info;
+
+    if (video_json[0]["isSuccess"])
+        video_info = pJ->get_video_information(video_json);
+    else
+        return;
 
     std::string video_url = video_info["video_url"].get<std::string>();
     std::string audio_url = video_info["audio_url"].get<std::string>();
     int video_resolution = video_info["resolution"].get<int>();
-    std::cout << video_info << "\n"; 
 
-    std::string video_output = video_url.substr(18,13) + "_video.mp4";
-    std::string audio_output = audio_url.substr(18,13) + "_audio.wav";
-    std::string merge_output = video_url.substr(18,13) + "_output.mp4";
+    std::string video_output = video_url.substr(18, 13) + "_video.mp4";
+    std::string audio_output = audio_url.substr(18, 13) + "_audio.wav";
+    std::string merge_output = video_url.substr(18, 13) + "_output.mp4";
 
-    std::cout << "Starting to download video..." << "\n";
+    std::cout << "Starting to download video..."
+              << "\n";
     pA->download_video(video_url, video_output);
-    std::cout << "Video downloaded successfully..." << "\n";
-    std::cout << "Starting to download audio..." << "\n";
+    std::cout << "Video downloaded successfully..."
+              << "\n";
+    std::cout << "Starting to download audio..."
+              << "\n";
     pA->download_audio(audio_url, audio_output);
-    std::cout << "Audio downloaded successfully..." << "\n";
-
-
-    std::cout << "Merging them into one file..." << "\n";
-    if(pA->merge_video_audio(video_output, audio_output, merge_output))
-        std::cout << "Success!" << "\n";
-    //if(pA->delete_video_audio(video_output, audio_output))
-        //std::cout << "Cleared & exiting." << "\n";
-    
+    std::cout << "Audio downloaded successfully..."
+              << "\n";
+    std::cout << "Merging them into one file..."
+              << "\n";
+    if (pA->merge_video_audio(video_output, audio_output, merge_output))
+        std::cout << "Success!"
+                  << "\n";
+    if (pA->clerance(video_output, audio_output, merge_output))
+        std::cout << "Cleared & exiting."
+                  << "\n";
 }
 
 bool xnti::app::download_video(std::string video_url, std::string output_name)
@@ -63,16 +70,34 @@ bool xnti::app::download_audio(std::string audio_url, std::string output_name)
     return true;
 }
 
-bool xnti::app::merge_video_audio(std::string video_path, std::string audio_path, std::string output) {
-    std::string command = "ffmpeg -i "+ video_path + " -i " + audio_path + " -c:v copy -c:a aac " + output;
+bool xnti::app::merge_video_audio(std::string video_path, std::string audio_path, std::string output)
+{
+    std::string command = "ffmpeg -y -i " + video_path + " -i " + audio_path + " -c:v copy -c:a aac " + output;
     std::cout << command << "\n";
     system(command.c_str());
     return true;
 }
 
-bool xnti::app::delete_video_audio(std::string video_path, std::string audio_path) {
-    std::remove(video_path.c_str());
-    std::remove(audio_path.c_str());
+bool xnti::app::check_if_file_exists(std::string &filename)
+{
+    std::ifstream f(filename.c_str());
+    return f.good();
+}
+
+bool xnti::app::clerance(std::string video_path, std::string audio_path, std::string output_path)
+{
+    auto pA = xnti::pApp();
+    if (pA->check_if_file_exists(output_path))
+    {
+        std::remove(video_path.c_str());
+        std::remove(audio_path.c_str());
+    }
+    else
+    {
+        std::remove(audio_path.c_str());
+        std::rename(video_path.c_str(), output_path.c_str());
+    }
+
     return true;
 }
 
@@ -95,7 +120,6 @@ std::string xnti::app::get_video_audio_url(const char *video_url, const char *re
     std::string res_str = res;
     std::string from_str = "DASH_" + res_str + ".mp4";
     xnti::pApp()->replace_string(str, from_str, "DASH_audio.mp4");
-    // std::cout << str << "\n";
     return str;
 }
 
