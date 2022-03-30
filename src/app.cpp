@@ -34,12 +34,12 @@ void xnti::app::run(const char *url)
 
     std::cout << "Starting to download video..."
               << "\n";
-    pA->download_video(video_url, video_output);
+    pA->download(video_url, video_output);
     std::cout << "Video downloaded successfully..."
               << "\n";
     std::cout << "Starting to download audio..."
               << "\n";
-    pA->download_audio(audio_url, audio_output);
+    pA->download(audio_url, audio_output);
     std::cout << "Audio downloaded successfully..."
               << "\n";
     std::cout << "Merging them into one file..."
@@ -52,20 +52,11 @@ void xnti::app::run(const char *url)
                   << "\n";
 }
 
-bool xnti::app::download_video(std::string video_url, std::string output_name)
+bool xnti::app::download(std::string video_url, std::string output_name)
 {
     auto ofstream = std::ofstream(output_name.c_str());
     auto session = cpr::Session();
     session.SetUrl(cpr::Url{video_url});
-    auto response = session.Download(ofstream);
-    return true;
-}
-
-bool xnti::app::download_audio(std::string audio_url, std::string output_name)
-{
-    auto ofstream = std::ofstream(output_name.c_str());
-    auto session = cpr::Session();
-    session.SetUrl(cpr::Url{audio_url});
     auto response = session.Download(ofstream);
     return true;
 }
