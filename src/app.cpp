@@ -63,8 +63,7 @@ bool xnti::app::download(std::string video_url, std::string output_name)
 
 bool xnti::app::merge_video_audio(std::string video_path, std::string audio_path, std::string output)
 {
-    std::string command = "ffmpeg -y -i " + video_path + " -i " + audio_path + " -c:v copy -c:a aac " + output;
-    std::cout << command << "\n";
+    std::string command = "ffmpeg -nostats -hide_banner -loglevel quiet -y -i " + video_path + " -i " + audio_path + " -c:v copy -c:a aac " + output;
     system(command.c_str());
     return true;
 }
