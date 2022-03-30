@@ -22,18 +22,12 @@ void xnti::app::run(const char *url)
 
     std::string video_url = video_info["video_url"].get<std::string>();
     std::string audio_url = video_info["audio_url"].get<std::string>();
+    int video_resolution = video_info["resolution"].get<int>();
+    std::cout << video_info << "\n"; 
 
-    std::string video_output = video_url + "_video.mp4";
-    video_output.erase(0,18);
-    video_output.erase(13,30);
-
-    std::string audio_output = audio_url + "_audio.wav";
-    audio_output.erase(0,18);
-    audio_output.erase(13,30);
-
-    std::string vu = video_url;
-    std::string merge_output = vu.substr(18,13) + "_output";
-    std::cout << merge_output << "\n";
+    std::string video_output = video_url.substr(18,13) + "_video.mp4";
+    std::string audio_output = audio_url.substr(18,13) + "_audio.wav";
+    std::string merge_output = video_url.substr(18,13) + "_output.mp4";
 
     std::cout << "Starting to download video..." << "\n";
     pA->download_video(video_url, video_output);
@@ -46,8 +40,8 @@ void xnti::app::run(const char *url)
     std::cout << "Merging them into one file..." << "\n";
     if(pA->merge_video_audio(video_output, audio_output, merge_output))
         std::cout << "Success!" << "\n";
-    if(pA->delete_video_audio(video_output, audio_output))
-        std::cout << "Cleared & exiting." << "\n";
+    //if(pA->delete_video_audio(video_output, audio_output))
+        //std::cout << "Cleared & exiting." << "\n";
     
 }
 
@@ -70,7 +64,8 @@ bool xnti::app::download_audio(std::string audio_url, std::string output_name)
 }
 
 bool xnti::app::merge_video_audio(std::string video_path, std::string audio_path, std::string output) {
-    std::string command = "ffmpeg -i "+ video_path + " -i " + audio_path + " -c:v copy -c:a aac " + output + ".mp4";
+    std::string command = "ffmpeg -i "+ video_path + " -i " + audio_path + " -c:v copy -c:a aac " + output;
+    std::cout << command << "\n";
     system(command.c_str());
     return true;
 }
