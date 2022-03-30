@@ -12,6 +12,12 @@ int main(int argc, char *argv[])
 
     // nlohmann::json j = xnti::pJson()->get_json(video_url);
     // const char* fallback_url = xnti::pJson()->get_fallback_url(j);
+
+    //auto ofstream = std::ofstream("t");
+    //auto session = cpr::Session();
+    //session.SetUrl(cpr::Url{video_url});
+    //auto response = session.Download(ofstream);
+
     xnti::pApp()->run(video_url);
     return 0;
 }
