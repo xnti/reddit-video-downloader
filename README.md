@@ -9,7 +9,9 @@ This project is a simple Reddit media downloader that extracts video and audio f
 - libcpr/cpr
 
 # How to use ?
-- You can simply download source code and compile with CMake.
-- -or-
-- You can simply download released version and use compiled application with terminal.
+- Download [release version](https://github.com/xnti/reddit-video-downloader/releases/tag/Latest).
+- Unzip it to a folder.
+- Usage: `$ ./reddit-video-downloader <url>`
+- Downloaded video will be same directory with the reddit-video-downloader.
+
 
