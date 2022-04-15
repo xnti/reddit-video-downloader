@@ -1,3 +1,10 @@
+/*     
+ *      author  : xnti (https://github.com/xnti)
+ *      purpose : handling application structure and basic functions.
+ *      license : MIT
+ */
+
+
 #include "include/app.h"
 #include "include/json.h"
 

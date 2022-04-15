@@ -1,3 +1,10 @@
+/*     
+ *      author  : xnti (https://github.com/xnti)
+ *      purpose : handling application structure and basic functions.
+ *      license : MIT
+ */
+
+
 #ifndef _APP_H
 #define _APP_H
 

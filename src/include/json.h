@@ -1,3 +1,10 @@
+/*     
+ *      author  : xnti (https://github.com/xnti)
+ *      purpose : handling json objects & convert them.
+ *      license : MIT
+ */
+
+
 #ifndef _JSON_H
 #define _JSON_H
 

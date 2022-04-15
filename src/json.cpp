@@ -1,7 +1,10 @@
-
-/**     author: xnti
- *      purpose: handling json objects & convert them.
+/*     
+ *      author  : xnti (https://github.com/xnti)
+ *      purpose : handling json objects & convert them.
+ *      license : MIT
  */
+
+
 #include <iostream>
 #include "include/json.h"
 #include "include/app.h"

@@ -1,3 +1,9 @@
+/*     
+ *      author  : xnti (https://github.com/xnti)
+ *      license : MIT
+ */
+
+
 #include <iostream>
 #include "include/app.h"
 #include "include/json.h"
