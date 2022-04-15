@@ -5,7 +5,7 @@
 int main(int argc, const char *argv[])
 {
     if(argc < 2) {
-        printf("\033[1;31mUsage: $ redditvid <url> \033[0m\n");
+        printf("\033[1;31mUsage: $ %s <url> \033[0m\n", argv[0]);
         return 1;
     }
 
